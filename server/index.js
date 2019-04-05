@@ -11,13 +11,16 @@ const userRoute = require('./routes/user.route')
 
 const path = require('path')
 const bodyParser = require('body-parser')
+const logger = require('morgan')
 
 app.use(bodyParser.json())
 
-app.use((req, res, next) => {
-    console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
-    next()
-})
+// app.use((req, res, next) => {
+//     console.log(`${new Date().toString()} => ${req.originalUrl}`, req.body)
+//     next()
+// })
+
+app.use(logger('dev'))
 
 app.use(personRoute)
 app.use(userRoute)
@@ -31,8 +34,7 @@ app.use((req, res, next) => {
 // handler for Error 500
 app.use((err, req, res, next) => {
     console.error(err.stack)
-
-    res.sendFile(path.join(__dirname, '../public/500.html'))
+    res.status(500).send('Internal server error')
 })
 
 const PORT = process.env.PORT || 3000

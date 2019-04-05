@@ -6,7 +6,12 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, "email can not be empty"],
         unique: true
+    },
+    password: {
+        type: String,
+        required: true
     }
 })
+
 
 module.exports = mongoose.model('User', UserSchema)
